@@ -11,54 +11,45 @@ import SwiftUI
 struct SettingView : View {
     
     @EnvironmentObject var setting: UserSetting
+    @AppStorage("apiKey") var apiKey: String = "DEMO_KEY"
     
     var body: some View {
         NavigationView {
             List {
                 Section {
-                    NavigationLink(destination: TextEditor(original: $setting.apiKey)) {
+                    NavigationLink {
+                        TextEditor(original: $apiKey)
+                            .navigationTitle("Edit API Key")
+                    } label: {
                         HStack {
-                            Image(systemName: "antenna.radiowaves.left.and.right")
-                            Text("API Key")
-                                .padding(.trailing, 24)
-                            
+                            Label("API Key", systemImage: "antenna.radiowaves.left.and.right")
                             Spacer()
-                            
                             Text(setting.apiKey)
                                 .foregroundColor(.secondary)
                                 .truncationMode(.tail)
                         }
+                        
                     }
                     
-                    
-                    
                     Toggle(isOn: $setting.loadHdImage) {
-                        HStack {
-                            Image(systemName: "map")
-                            Text("HD Image")
-                        }
+                        Label("HD Image", systemImage: "map")
                     }
                 }
                 
                 Section {
-                    Button(action: {
+                    Button {
                         UIApplication.shared.open(URL(string: "https://github.com/LASER-Yi/SwiftUI-APOD")!, options: [:], completionHandler: nil)
-                    }) {
+                    } label: {
                         HStack {
-                            Image(systemName: "heart")
-                                .foregroundColor(.primary)
-                            Text("Github")
-                                .foregroundColor(.primary)
-                            
+                            Label("Github", systemImage: "heart")
                             Spacer()
-                            
                             Text("APOD-SwiftUI")
                                 .foregroundColor(.secondary)
                         }
                     }
-                    
                 }
             }
+            .accentColor(.primary)
             .listStyle(GroupedListStyle())
             .navigationBarTitle(Text("Settings"), displayMode: .inline)
         }

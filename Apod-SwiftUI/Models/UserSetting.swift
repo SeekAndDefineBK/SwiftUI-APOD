@@ -17,21 +17,6 @@ final class UserSetting: ObservableObject {
     
     static let shared = UserSetting()
     
-    var apiKey: String {
-        set {
-            objectWillChange.send()
-            UserDefaults.saveCustomValue(for: .ApiKey, value: newValue)
-        }
-        get {
-            if let value = UserDefaults.getCustomValue(for: .ApiKey) as? String {
-                return value
-            }else {
-                UserDefaults.saveCustomValue(for: .ApiKey, value: "DEMO_KEY")
-                return "DEMO_KEY"
-            }
-        }
-    }
-    
     var loadHdImage: Bool {
             set {
                 objectWillChange.send()
